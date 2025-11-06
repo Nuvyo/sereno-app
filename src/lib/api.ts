@@ -24,7 +24,7 @@ class ApiService {
   private async request<T>(
     endpoint: string,
     options: RequestInit = {}
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     
     const config: RequestInit = {
@@ -43,7 +43,8 @@ class ApiService {
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
-      const data: ApiResponse<T> = await response.json();
+      const data: T = await response.json();
+
       return data;
     } catch (error) {
       console.error('API Request failed:', error);
@@ -52,7 +53,7 @@ class ApiService {
   }
 
   // GET request
-  async get<T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> {
+  async get<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'GET',
       headers,
@@ -64,7 +65,7 @@ class ApiService {
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
     headers?: Record<string, string>
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
@@ -77,7 +78,7 @@ class ApiService {
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
     headers?: Record<string, string>
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
       body: data ? JSON.stringify(data) : undefined,
@@ -89,7 +90,7 @@ class ApiService {
   async delete<T>(
     endpoint: string,
     headers?: Record<string, string>
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'DELETE',
       headers,
@@ -101,7 +102,7 @@ class ApiService {
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
     headers?: Record<string, string>
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PATCH',
       body: data ? JSON.stringify(data) : undefined,

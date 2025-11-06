@@ -4,9 +4,9 @@ import { apiService, ApiResponse } from '@/lib/api';
 export function useApiGet<T>(
   queryKey: string[],
   endpoint: string,
-  options?: Omit<UseQueryOptions<ApiResponse<T>>, 'queryKey' | 'queryFn'>
+  options?: Omit<UseQueryOptions<T, Error, T>, 'queryKey' | 'queryFn'>
 ) {
-  return useQuery({
+  return useQuery<T, Error, T>({
     queryKey,
     queryFn: () => apiService.get<T>(endpoint),
     ...options,
@@ -17,9 +17,9 @@ export function useAuthApiGet<T>(
   queryKey: string[],
   endpoint: string,
   token: string,
-  options?: Omit<UseQueryOptions<ApiResponse<T>>, 'queryKey' | 'queryFn'>
+  options?: Omit<UseQueryOptions<T, Error, T>, 'queryKey' | 'queryFn'>
 ) {
-  return useQuery({
+  return useQuery<T, Error, T>({
     queryKey,
     queryFn: () => apiService.withAuth(token).get<T>(endpoint),
     enabled: !!token,
@@ -29,7 +29,7 @@ export function useAuthApiGet<T>(
 
 export function useApiPost<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
   endpoint: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, TVariables>
+  options?: UseMutationOptions<TData, Error, TVariables>
 ) {
   return useMutation({
     mutationFn: (variables: TVariables) => 
@@ -41,7 +41,7 @@ export function useApiPost<TData, TVariables extends Record<string, unknown> | u
 export function useAuthApiPost<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
   endpoint: string,
   token: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, TVariables>
+  options?: UseMutationOptions<TData, Error, TVariables>
 ) {
   return useMutation({
     mutationFn: (variables: TVariables) => 
@@ -52,7 +52,7 @@ export function useAuthApiPost<TData, TVariables extends Record<string, unknown>
 
 export function useApiPut<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
   endpoint: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, TVariables>
+  options?: UseMutationOptions<TData, Error, TVariables>
 ) {
   return useMutation({
     mutationFn: (variables: TVariables) => 
@@ -64,7 +64,7 @@ export function useApiPut<TData, TVariables extends Record<string, unknown> | un
 export function useAuthApiPut<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
   endpoint: string,
   token: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, TVariables>
+  options?: UseMutationOptions<TData, Error, TVariables>
 ) {
   return useMutation({
     mutationFn: (variables: TVariables) => 
@@ -75,7 +75,7 @@ export function useAuthApiPut<TData, TVariables extends Record<string, unknown> 
 
 export function useApiDelete<TData>(
   endpoint: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, string>
+  options?: UseMutationOptions<TData, Error, string>
 ) {
   return useMutation({
     mutationFn: (id: string) => 
@@ -87,7 +87,7 @@ export function useApiDelete<TData>(
 export function useAuthApiDelete<TData>(
   endpoint: string,
   token: string,
-  options?: UseMutationOptions<ApiResponse<TData>, Error, string>
+  options?: UseMutationOptions<TData, Error, string>
 ) {
   return useMutation({
     mutationFn: (id: string) => 
