@@ -1,6 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import Main from '@/components/Main';
+import Layout from '@/components/Layout';
+import { ButtonLink } from '@/components/ui/button-link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 export default function NotFound() {
   const location = useLocation();
@@ -10,14 +13,14 @@ export default function NotFound() {
   }, [location.pathname]);
 
   return (
-    <Main>
-      <h1 className="mb-4 text-4xl font-bold">404</h1>
+    <Layout>
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>404</AlertTitle>
+        <AlertDescription>Página não encontrada</AlertDescription>
+      </Alert>
 
-      <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-
-      <a href="/" className="text-blue-500 underline hover:text-blue-700">
-        Return to Home
-      </a>
-    </Main>
+      <ButtonLink to="/">Voltar para a página inicial</ButtonLink>
+    </Layout>
   );
 };

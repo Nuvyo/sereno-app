@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import Layout from '@/components/Layout';
+import { ButtonLink } from '@/components/ui/button-link';
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       </p>
 
       <Card className="p-6">
-        Olá
+        <ButtonLink to="/server-status">Verificar status do servidor</ButtonLink>
       </Card>
     </Layout>
   );
