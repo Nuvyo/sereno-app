@@ -9,17 +9,18 @@ const ScrollArea = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
     const [showScrollbar, setShowScrollbar] = React.useState(false);
     const [thumbHeight, setThumbHeight] = React.useState(0);
     const [thumbTop, setThumbTop] = React.useState(0);
-
     const updateScrollbar = React.useCallback(() => {
       if (!contentRef.current || !scrollbarRef.current) return;
 
       const { scrollHeight, clientHeight, scrollTop } = contentRef.current;
       const hasScroll = scrollHeight > clientHeight;
+
       setShowScrollbar(hasScroll);
 
       if (hasScroll) {
         const thumbHeightCalc = (clientHeight / scrollHeight) * clientHeight;
         const thumbTopCalc = (scrollTop / scrollHeight) * clientHeight;
+
         setThumbHeight(thumbHeightCalc);
         setThumbTop(thumbTopCalc);
       }
@@ -28,9 +29,11 @@ const ScrollArea = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
     React.useEffect(() => {
       updateScrollbar();
       const content = contentRef.current;
+
       if (content) {
         content.addEventListener('scroll', updateScrollbar);
         window.addEventListener('resize', updateScrollbar);
+
         return () => {
           content.removeEventListener('scroll', updateScrollbar);
           window.removeEventListener('resize', updateScrollbar);
@@ -40,17 +43,17 @@ const ScrollArea = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 
     return (
       <div ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
-        <div ref={contentRef} className="h-full w-full overflow-auto scrollbar-hide">
+        <div ref={contentRef} className='h-full w-full overflow-auto scrollbar-hide'>
           {children}
         </div>
         {showScrollbar && (
           <div
             ref={scrollbarRef}
-            className="absolute right-0 top-0 h-full w-2.5 border-l border-l-transparent p-[1px] flex touch-none select-none transition-colors"
+            className='absolute right-0 top-0 h-full w-2.5 border-l border-l-transparent p-[1px] flex touch-none select-none transition-colors'
           >
             <div
               ref={thumbRef}
-              className="relative flex-1 rounded-full bg-border"
+              className='relative flex-1 rounded-full bg-border'
               style={{
                 height: `${thumbHeight}px`,
                 transform: `translateY(${thumbTop}px)`,
@@ -62,17 +65,15 @@ const ScrollArea = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
     );
   },
 );
+
 ScrollArea.displayName = 'ScrollArea';
 
 const ScrollBar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex touch-none select-none transition-colors', className)}
-      {...props}
-    />
+    <div ref={ref} className={cn('flex touch-none select-none transition-colors', className)} {...props} />
   ),
 );
+
 ScrollBar.displayName = 'ScrollBar';
 
 export { ScrollArea, ScrollBar };

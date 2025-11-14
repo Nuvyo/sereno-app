@@ -4,8 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, within } from '@testing-library/react';
 import {
   Sheet,
-  SheetPortal,
-  SheetOverlay,
   SheetTrigger,
   SheetClose,
   SheetContent,
@@ -18,6 +16,7 @@ import {
 describe('Sheet', () => {
   it('abre sheet ao clicar no trigger', async () => {
     const user = userEvent.setup();
+
     render(
       <Sheet>
         <SheetTrigger>Abrir Sheet</SheetTrigger>
@@ -35,6 +34,7 @@ describe('Sheet', () => {
     );
 
     const trigger = screen.getByText('Abrir Sheet');
+
     await user.click(trigger);
 
     expect(screen.getByText('Título do Sheet')).toBeInTheDocument();
@@ -45,7 +45,6 @@ describe('Sheet', () => {
   it('fecha sheet ao clicar em fechar', async () => {
     const user = userEvent.setup();
     const onOpenChange = vi.fn();
-
     const { container } = render(
       <Sheet open onOpenChange={onOpenChange}>
         <SheetContent>
@@ -53,11 +52,10 @@ describe('Sheet', () => {
         </SheetContent>
       </Sheet>,
     );
-
-    // Escopa a busca ao dialog atual para evitar conflitos com outras instâncias portadas
     const dialogs = screen.getAllByRole('dialog');
     const dialog = dialogs[dialogs.length - 1];
     const closeButton = within(dialog).getByText('Fechar');
+
     await user.click(closeButton);
 
     expect(onOpenChange).toHaveBeenCalledWith(false);
@@ -66,7 +64,7 @@ describe('Sheet', () => {
   it('renderiza em diferentes posições', () => {
     render(
       <Sheet open>
-        <SheetContent side="left">Conteúdo lateral</SheetContent>
+        <SheetContent side='left'>Conteúdo lateral</SheetContent>
       </Sheet>,
     );
 

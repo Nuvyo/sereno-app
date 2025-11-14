@@ -26,6 +26,7 @@ export const ButtonLink = React.forwardRef<HTMLButtonElement, ButtonLinkProps>(
   ({ children, className, variant = 'link', size, ...rest }, ref) => {
     if ('to' in rest) {
       const { to, ...btnProps } = rest;
+
       return (
         <Button ref={ref} variant={variant} size={size} className={cn(className)} asChild {...btnProps}>
           <Link to={to}>{children}</Link>
@@ -34,6 +35,7 @@ export const ButtonLink = React.forwardRef<HTMLButtonElement, ButtonLinkProps>(
     }
 
     const { href, external, ...btnProps } = rest;
+
     return (
       <Button ref={ref} variant={variant} size={size} className={cn(className)} asChild {...btnProps}>
         <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>

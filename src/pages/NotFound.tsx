@@ -14,13 +14,13 @@ export default function NotFound() {
 
   return (
     <Layout>
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
+      <Alert variant='destructive'>
+        <AlertCircle className='h-4 w-4' />
         <AlertTitle>404</AlertTitle>
         <AlertDescription>Página não encontrada</AlertDescription>
       </Alert>
 
-      <ButtonLink to="/">Voltar para a página inicial</ButtonLink>
+      <ButtonLink to='/'>Voltar para a página inicial</ButtonLink>
     </Layout>
   );
-};
+}

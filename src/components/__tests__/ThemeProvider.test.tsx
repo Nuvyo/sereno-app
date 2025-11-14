@@ -6,6 +6,7 @@ import { useTheme } from '@/components/use-theme';
 
 function ThemeConsumer() {
   const { theme, resolvedTheme, setTheme } = useTheme();
+
   return (
     <div>
       <div>theme:{theme}</div>
@@ -18,13 +19,12 @@ function ThemeConsumer() {
 describe('ThemeProvider', () => {
   it('fornece contexto e permite alteração de tema', () => {
     render(
-      <ThemeProvider defaultTheme="light" storageKey="test-ui-theme">
+      <ThemeProvider defaultTheme='light' storageKey='test-ui-theme'>
         <ThemeConsumer />
       </ThemeProvider>,
     );
 
     expect(screen.getByText(/theme:light/)).toBeInTheDocument();
-    // clica para mudar tema e verifica localStorage
     screen.getByText('dark').click();
     expect(window.localStorage.getItem('test-ui-theme')).toBe('dark');
   });

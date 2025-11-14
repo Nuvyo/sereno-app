@@ -10,12 +10,13 @@ interface ContextMenuContextValue {
 }
 
 const ContextMenuContext = React.createContext<ContextMenuContextValue | undefined>(undefined);
-
 const useContextMenu = () => {
   const context = React.useContext(ContextMenuContext);
+
   if (!context) {
     throw new Error('ContextMenu components must be used within ContextMenu');
   }
+
   return context;
 };
 
@@ -40,37 +41,32 @@ interface ContextMenuTriggerProps {
 
 const ContextMenuTrigger = ({ children }: ContextMenuTriggerProps) => {
   const { setOpen, setPosition } = useContextMenu();
-
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Posiciona o menu na coordenada do ponteiro do mouse (viewport)
     setPosition({ x: e.clientX, y: e.clientY });
     setOpen(true);
   };
 
   return <div onContextMenu={handleContextMenu}>{children}</div>;
 };
-
 const ContextMenuGroup = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
-
 const ContextMenuPortal = ({ children }: { children: React.ReactNode }) => {
   const { open } = useContextMenu();
+
   if (!open) return null;
+
   return <>{children}</>;
 };
-
 const ContextMenuSub = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
-
 const ContextMenuRadioGroup = ({
   children,
-  value,
-  onValueChange,
+  value: _value,
+  onValueChange: _onValueChange,
 }: {
   children: React.ReactNode;
   value?: string;
   onValueChange?: (value: string) => void;
 }) => <div>{children}</div>;
-
 const ContextMenuSubTrigger = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }
@@ -85,67 +81,59 @@ const ContextMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    <ChevronRight className='ml-auto h-4 w-4' />
   </div>
 ));
+
 ContextMenuSubTrigger.displayName = 'ContextMenuSubTrigger';
 
-const ContextMenuSubContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
-      className,
-    )}
-    {...props}
-  />
-));
+const ContextMenuSubContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
+
 ContextMenuSubContent.displayName = 'ContextMenuSubContent';
 
 type EdgePadding = number | Partial<Record<'top' | 'right' | 'bottom' | 'left', number>>;
 
 interface ContextMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  // Espaço mínimo entre o menu e as bordas da viewport
   collisionPadding?: EdgePadding;
-  // Distância em px entre o ponteiro e o menu ao abrir
   pointerOffset?: number;
 }
 
 const ContextMenuContent = React.forwardRef<HTMLDivElement, ContextMenuContentProps>(
   ({ className, style, collisionPadding = 8, pointerOffset = 4, ...props }, ref) => {
     const { open, setOpen, position } = useContextMenu();
-
     const localRef = React.useRef<HTMLDivElement | null>(null);
     const setRefs = (node: HTMLDivElement | null) => {
       localRef.current = node;
+
       if (typeof ref === 'function') ref(node);
       else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
-
     const [coords, setCoords] = React.useState<{ x: number; y: number }>({ x: -10000, y: -10000 });
-
-    // Recalcula posição para evitar que o menu ultrapasse as bordas da viewport
     const clampToViewport = React.useCallback(() => {
       const el = localRef.current;
+
       if (!el) return;
-      // Resolve padding por borda
+
       const pad = (side: 'top' | 'right' | 'bottom' | 'left') =>
         typeof collisionPadding === 'number' ? collisionPadding : (collisionPadding?.[side] ?? 8);
-
       const desiredX = position.x + pointerOffset;
       const desiredY = position.y + pointerOffset;
-
-      // Pega tamanho real do conteúdo
       const rect = el.getBoundingClientRect();
       const width = rect.width;
       const height = rect.height;
-
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-
       const x = Math.max(pad('left'), Math.min(desiredX, vw - width - pad('right')));
       const y = Math.max(pad('top'), Math.min(desiredY, vh - height - pad('bottom')));
 
@@ -175,13 +163,13 @@ const ContextMenuContent = React.forwardRef<HTMLDivElement, ContextMenuContentPr
       }
     }, [open, setOpen]);
 
-    // Quando abre ou muda a posição desejada, ajusta para não extrapolar as bordas
     React.useLayoutEffect(() => {
       if (!open) return;
-      // Aguarda o elemento estar no DOM
+
       clampToViewport();
-      // Reaperta o clamp no próximo frame também, caso animações alterem o tamanho
+
       const id = requestAnimationFrame(() => clampToViewport());
+
       return () => cancelAnimationFrame(id);
     }, [open, position, clampToViewport]);
 
@@ -213,6 +201,7 @@ const ContextMenuContent = React.forwardRef<HTMLDivElement, ContextMenuContentPr
     );
   },
 );
+
 ContextMenuContent.displayName = 'ContextMenuContent';
 
 const ContextMenuItem = React.forwardRef<
@@ -239,6 +228,7 @@ const ContextMenuItem = React.forwardRef<
     />
   );
 });
+
 ContextMenuItem.displayName = 'ContextMenuItem';
 
 const ContextMenuCheckboxItem = React.forwardRef<
@@ -253,12 +243,13 @@ const ContextMenuCheckboxItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      {checked && <Check className="h-4 w-4" />}
+    <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
+      {checked && <Check className='h-4 w-4' />}
     </span>
     {children}
   </div>
 ));
+
 ContextMenuCheckboxItem.displayName = 'ContextMenuCheckboxItem';
 
 const ContextMenuRadioItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
@@ -271,42 +262,38 @@ const ContextMenuRadioItem = React.forwardRef<HTMLDivElement, React.HTMLAttribut
       )}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-        <Circle className="h-2 w-2 fill-current" />
+      <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
+        <Circle className='h-2 w-2 fill-current' />
       </span>
       {children}
     </div>
   ),
 );
+
 ContextMenuRadioItem.displayName = 'ContextMenuRadioItem';
 
-const ContextMenuLabel = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }
->(({ className, inset, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('px-2 py-1.5 text-sm font-semibold text-foreground', inset && 'pl-8', className)}
-    {...props}
-  />
-));
+const ContextMenuLabel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }>(
+  ({ className, inset, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn('px-2 py-1.5 text-sm font-semibold text-foreground', inset && 'pl-8', className)}
+      {...props}
+    />
+  ),
+);
+
 ContextMenuLabel.displayName = 'ContextMenuLabel';
 
 const ContextMenuSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('-mx-1 my-1 h-px bg-border', className)} {...props} />
-  ),
+  ({ className, ...props }, ref) => <div ref={ref} className={cn('-mx-1 my-1 h-px bg-border', className)} {...props} />,
 );
+
 ContextMenuSeparator.displayName = 'ContextMenuSeparator';
 
 const ContextMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
-      {...props}
-    />
-  );
+  return <span className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)} {...props} />;
 };
+
 ContextMenuShortcut.displayName = 'ContextMenuShortcut';
 
 export {

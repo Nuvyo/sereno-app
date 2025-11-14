@@ -16,9 +16,6 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarProvider,
-  SidebarRail,
-  SidebarSeparator,
-  SidebarTrigger,
 } from '@/components/ui/sidebar';
 
 describe('Sidebar', () => {

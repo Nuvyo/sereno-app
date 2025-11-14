@@ -36,26 +36,11 @@ interface ToggleGroupProps
 }
 
 const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
-  (
-    {
-      className,
-      type = 'single',
-      value,
-      defaultValue,
-      onValueChange,
-      variant,
-      size,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, type = 'single', value, defaultValue, onValueChange, variant, size, children, ...props }, ref) => {
     const [internalValue, setInternalValue] = React.useState<string | string[]>(
       value ?? defaultValue ?? (type === 'single' ? '' : []),
     );
-
     const currentValue = value ?? internalValue;
-
     const handleValueChange = React.useCallback(
       (itemValue: string) => {
         let newValue: string | string[];
@@ -64,6 +49,7 @@ const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
           newValue = currentValue === itemValue ? '' : itemValue;
         } else {
           const arrayValue = Array.isArray(currentValue) ? currentValue : [];
+
           newValue = arrayValue.includes(itemValue)
             ? arrayValue.filter((v) => v !== itemValue)
             : [...arrayValue, itemValue];
@@ -72,6 +58,7 @@ const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
         if (value === undefined) {
           setInternalValue(newValue);
         }
+
         onValueChange?.(newValue);
       },
       [type, currentValue, value, onValueChange],
@@ -81,18 +68,14 @@ const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
       <ToggleGroupContext.Provider
         value={{ type, value: currentValue, onValueChange: handleValueChange, variant, size }}
       >
-        <div
-          ref={ref}
-          role="group"
-          className={cn(toggleGroupVariants({ variant, className }))}
-          {...props}
-        >
+        <div ref={ref} role='group' className={cn(toggleGroupVariants({ variant, className }))} {...props}>
           {children}
         </div>
       </ToggleGroupContext.Provider>
     );
   },
 );
+
 ToggleGroup.displayName = 'ToggleGroup';
 
 interface ToggleGroupItemProps
@@ -104,6 +87,7 @@ interface ToggleGroupItemProps
 const ToggleGroupItem = React.forwardRef<HTMLButtonElement, ToggleGroupItemProps>(
   ({ className, value, variant, size, ...props }, ref) => {
     const context = React.useContext(ToggleGroupContext);
+
     if (!context) throw new Error('ToggleGroupItem must be used within ToggleGroup');
 
     const isPressed =
@@ -114,7 +98,7 @@ const ToggleGroupItem = React.forwardRef<HTMLButtonElement, ToggleGroupItemProps
     return (
       <button
         ref={ref}
-        type="button"
+        type='button'
         aria-pressed={isPressed}
         data-state={isPressed ? 'on' : 'off'}
         onClick={() => context.onValueChange(value)}
@@ -130,6 +114,7 @@ const ToggleGroupItem = React.forwardRef<HTMLButtonElement, ToggleGroupItemProps
     );
   },
 );
+
 ToggleGroupItem.displayName = 'ToggleGroupItem';
 
 export { ToggleGroup, ToggleGroupItem };

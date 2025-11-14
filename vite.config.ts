@@ -42,18 +42,14 @@ export default defineConfig(({ mode }) => ({
     environment: 'happy-dom',
     setupFiles: path.resolve(__dirname, './src/test/setup.tsx'),
     css: true,
-    // Use thread-based pool to avoid occasional fork startup timeouts on Windows paths with non-ASCII chars
     pool: 'threads',
     poolOptions: {
       threads: {
-        // Force single worker to avoid thread runner startup issues in some Windows environments
         maxThreads: 1,
         minThreads: 1,
       },
     },
-    // Slightly higher timeout to reduce flakiness on slower CI
     testTimeout: 5000,
-    // Force sequential test execution
     fileParallelism: false,
     deps: {
       inline: ['react', 'react-dom'],

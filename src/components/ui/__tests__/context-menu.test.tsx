@@ -8,16 +8,6 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuCheckboxItem,
-  ContextMenuRadioItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuGroup,
-  ContextMenuPortal,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuRadioGroup,
 } from '@/components/ui/context-menu';
 
 describe('ContextMenu', () => {
@@ -32,11 +22,10 @@ describe('ContextMenu', () => {
         </ContextMenuContent>
       </ContextMenu>,
     );
-
     const trigger = within(container).getByText('Clique direito aqui');
+
     fireEvent.contextMenu(trigger);
 
-    // Os itens não possuem role acessível neste wrapper simples
     expect(screen.getAllByText('Copiar').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Colar').length).toBeGreaterThan(0);
   });
@@ -44,7 +33,6 @@ describe('ContextMenu', () => {
   it('executa callback ao selecionar item', async () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
-
     const { container } = render(
       <ContextMenu>
         <ContextMenuTrigger>Trigger</ContextMenuTrigger>
@@ -53,11 +41,12 @@ describe('ContextMenu', () => {
         </ContextMenuContent>
       </ContextMenu>,
     );
-
     const trigger = within(container).getByText('Trigger');
+
     fireEvent.contextMenu(trigger);
 
     const item = screen.getAllByText('Ação').pop() as HTMLElement;
+
     await user.click(item);
 
     expect(onSelect).toHaveBeenCalled();
@@ -73,11 +62,12 @@ describe('ContextMenu', () => {
         </ContextMenuContent>
       </ContextMenu>,
     );
-
     const trigger = within(container).getByText('Trigger');
+
     fireEvent.contextMenu(trigger);
 
     const item = screen.getAllByText('Opção marcada').pop();
+
     expect(item).toBeInTheDocument();
   });
 });

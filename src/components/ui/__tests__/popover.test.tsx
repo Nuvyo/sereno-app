@@ -16,10 +16,13 @@ describe('Popover', () => {
     );
 
     expect(screen.queryByText('Conteúdo')).not.toBeInTheDocument();
+
     await user.click(screen.getByRole('button', { name: /abrir/i }));
+
     expect(screen.getByText('Conteúdo')).toBeInTheDocument();
-    // clicar fora fecha (simulamos clicando no body)
+
     await user.click(document.body);
+
     expect(screen.queryByText('Conteúdo')).not.toBeInTheDocument();
   });
 });

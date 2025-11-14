@@ -30,7 +30,6 @@ function Calendar({
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
-          // Remove totalmente outline/ring (tanto em focus quanto focus-visible)
           'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 ring-0 ring-offset-0 outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0',
         ),
         nav_button_previous: 'absolute left-1',
@@ -39,12 +38,9 @@ function Calendar({
         head_row: 'flex',
         head_cell: 'text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]',
         row: 'flex w-full mt-2',
-        // Removemos os backgrounds roxos no <td> que causavam a “borda” ao redor do dia selecionado
-        // Mantemos apenas os arredondamentos para intervalos, sem aplicar bg no <td>
         cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
         day: cn(
           buttonVariants({ variant: 'ghost' }),
-          // Remove totalmente outline/ring (tanto em focus quanto focus-visible)
           'h-9 w-9 p-0 font-normal aria-selected:opacity-100 ring-0 ring-offset-0 outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0',
         ),
         day_range_end: 'day-range-end',
@@ -59,8 +55,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: ({ ..._props }) => <ChevronLeft className='h-4 w-4' />,
+        IconRight: ({ ..._props }) => <ChevronRight className='h-4 w-4' />,
       }}
       {...props}
     />

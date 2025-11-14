@@ -3,19 +3,14 @@ import { type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { toggleVariants } from './toggle-variants';
 
-interface ToggleProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof toggleVariants> {
+interface ToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof toggleVariants> {
   pressed?: boolean;
   defaultPressed?: boolean;
   onPressedChange?: (pressed: boolean) => void;
 }
 
 const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
-  (
-    { className, variant, size, pressed, defaultPressed = false, onPressedChange, ...props },
-    ref,
-  ) => {
+  ({ className, variant, size, pressed, defaultPressed = false, onPressedChange, ...props }, ref) => {
     const [isPressed, setIsPressed] = React.useState(pressed ?? defaultPressed);
 
     React.useEffect(() => {
@@ -26,16 +21,18 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
 
     const handleClick = () => {
       const newPressed = !isPressed;
+
       if (pressed === undefined) {
         setIsPressed(newPressed);
       }
+
       onPressedChange?.(newPressed);
     };
 
     return (
       <button
         ref={ref}
-        type="button"
+        type='button'
         aria-pressed={isPressed}
         data-state={isPressed ? 'on' : 'off'}
         onClick={handleClick}
@@ -45,6 +42,7 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
     );
   },
 );
+
 Toggle.displayName = 'Toggle';
 
 export { Toggle };

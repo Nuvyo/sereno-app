@@ -1,11 +1,9 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitForElementToBeRemoved, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   Drawer,
-  DrawerPortal,
-  DrawerOverlay,
   DrawerTrigger,
   DrawerClose,
   DrawerContent,
@@ -18,6 +16,7 @@ import {
 describe('Drawer', () => {
   it('abre drawer ao clicar no trigger', async () => {
     const user = userEvent.setup();
+
     render(
       <Drawer>
         <DrawerTrigger>Abrir Drawer</DrawerTrigger>
@@ -35,6 +34,7 @@ describe('Drawer', () => {
     );
 
     const trigger = screen.getByText('Abrir Drawer');
+
     await user.click(trigger);
 
     expect(screen.getByText('Título do Drawer')).toBeInTheDocument();
@@ -42,13 +42,10 @@ describe('Drawer', () => {
     expect(screen.getByText('Conteúdo do drawer')).toBeInTheDocument();
   });
 
-  // Nota: eventos de fechamento/abertura do vaul não são confiáveis no JSDOM,
-  // por isso evitamos assertivas diretas em callbacks aqui.
-
   it('aplica classes customizadas', () => {
     render(
       <Drawer open>
-        <DrawerContent className="custom-drawer">Conteúdo customizado</DrawerContent>
+        <DrawerContent className='custom-drawer'>Conteúdo customizado</DrawerContent>
       </Drawer>,
     );
 

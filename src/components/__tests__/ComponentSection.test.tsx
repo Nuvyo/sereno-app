@@ -7,7 +7,7 @@ import { ComponentSection } from '@/components/ComponentSection';
 describe('ComponentSection', () => {
   it('renderiza título, descrição e filhos', () => {
     renderWithProviders(
-      <ComponentSection title="Meu Título" description="Minha descrição">
+      <ComponentSection title='Meu Título' description='Minha descrição'>
         <button>Filho</button>
       </ComponentSection>,
     );
@@ -19,13 +19,12 @@ describe('ComponentSection', () => {
 
   it('não renderiza descrição quando não fornecida', () => {
     renderWithProviders(
-      <ComponentSection title="Sem descrição">
+      <ComponentSection title='Sem descrição'>
         <div>conteúdo</div>
       </ComponentSection>,
     );
 
     expect(screen.getByText('Sem descrição')).toBeInTheDocument();
-    // Não deve haver parágrafo com a descrição
     expect(screen.queryByText('Minha descrição')).not.toBeInTheDocument();
   });
 });

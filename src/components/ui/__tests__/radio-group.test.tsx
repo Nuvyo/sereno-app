@@ -9,14 +9,15 @@ describe('RadioGroup', () => {
     const user = userEvent.setup();
 
     render(
-      <RadioGroup defaultValue="a">
-        <RadioGroupItem value="a" aria-label="A" />
-        <RadioGroupItem value="b" aria-label="B" />
+      <RadioGroup defaultValue='a'>
+        <RadioGroupItem value='a' aria-label='A' />
+        <RadioGroupItem value='b' aria-label='B' />
       </RadioGroup>,
     );
 
     const a = screen.getByLabelText('A') as HTMLInputElement;
     const b = screen.getByLabelText('B') as HTMLInputElement;
+
     expect(a.checked).toBe(true);
     expect(b.checked).toBe(false);
     await user.click(b);

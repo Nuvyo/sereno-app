@@ -6,16 +6,16 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/componen
 describe('Resizable', () => {
   it('renderiza grupo de painéis redimensionáveis', () => {
     render(
-      <ResizablePanelGroup direction="horizontal" className="max-w-md rounded-lg border">
+      <ResizablePanelGroup direction='horizontal' className='max-w-md rounded-lg border'>
         <ResizablePanel defaultSize={50}>
-          <div className="flex h-[200px] items-center justify-center p-6">
-            <span className="font-semibold">Um</span>
+          <div className='flex h-[200px] items-center justify-center p-6'>
+            <span className='font-semibold'>Um</span>
           </div>
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={50}>
-          <div className="flex h-[200px] items-center justify-center p-6">
-            <span className="font-semibold">Dois</span>
+          <div className='flex h-[200px] items-center justify-center p-6'>
+            <span className='font-semibold'>Dois</span>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>,
@@ -27,7 +27,7 @@ describe('Resizable', () => {
 
   it('renderiza com direção vertical', () => {
     render(
-      <ResizablePanelGroup direction="vertical">
+      <ResizablePanelGroup direction='vertical'>
         <ResizablePanel>
           <div>Painel superior</div>
         </ResizablePanel>
@@ -44,8 +44,8 @@ describe('Resizable', () => {
 
   it('aplica classes customizadas', () => {
     render(
-      <ResizablePanelGroup direction="horizontal" className="custom-group">
-        <ResizablePanel className="custom-panel">
+      <ResizablePanelGroup direction='horizontal' className='custom-group'>
+        <ResizablePanel className='custom-panel'>
           <div>Conteúdo</div>
         </ResizablePanel>
       </ResizablePanelGroup>,

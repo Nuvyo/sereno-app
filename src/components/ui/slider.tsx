@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-interface SliderProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
+interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: number[];
   defaultValue?: number[];
   onValueChange?: (value: number[]) => void;
@@ -13,27 +12,12 @@ interface SliderProps
 }
 
 const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
-  (
-    {
-      className,
-      value,
-      defaultValue = [0],
-      onValueChange,
-      min = 0,
-      max = 100,
-      step = 1,
-      disabled,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, value, defaultValue = [0], onValueChange, min = 0, max = 100, step = 1, disabled, ...props }, ref) => {
     const [internalValue, setInternalValue] = React.useState(value || defaultValue);
     const sliderRef = React.useRef<HTMLDivElement>(null);
     const isDragging = React.useRef(false);
-
     const currentValue = value || internalValue;
     const percentage = ((currentValue[0] - min) / (max - min)) * 100;
-
     const updateValue = React.useCallback(
       (clientX: number) => {
         if (!sliderRef.current) return;
@@ -43,22 +27,22 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
         const rawValue = min + percent * (max - min);
         const steppedValue = Math.round(rawValue / step) * step;
         const clampedValue = Math.max(min, Math.min(max, steppedValue));
-
         const newValue = [clampedValue];
+
         if (value === undefined) {
           setInternalValue(newValue);
         }
+
         onValueChange?.(newValue);
       },
       [min, max, step, value, onValueChange],
     );
-
     const handleMouseDown = (e: React.MouseEvent) => {
       if (disabled) return;
+
       isDragging.current = true;
       updateValue(e.clientX);
     };
-
     const handleMouseMove = React.useCallback(
       (e: MouseEvent) => {
         if (isDragging.current) {
@@ -67,7 +51,6 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       },
       [updateValue],
     );
-
     const handleMouseUp = React.useCallback(() => {
       isDragging.current = false;
     }, []);
@@ -75,6 +58,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     React.useEffect(() => {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
+
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
@@ -82,11 +66,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     }, [handleMouseMove, handleMouseUp]);
 
     return (
-      <div
-        ref={ref}
-        className={cn('relative flex w-full touch-none select-none items-center', className)}
-        {...props}
-      >
+      <div ref={ref} className={cn('relative flex w-full touch-none select-none items-center', className)} {...props}>
         <div
           ref={sliderRef}
           className={cn(
@@ -95,7 +75,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
           )}
           onMouseDown={handleMouseDown}
         >
-          <div className="absolute h-full bg-primary" style={{ width: `${percentage}%` }} />
+          <div className='absolute h-full bg-primary' style={{ width: `${percentage}%` }} />
         </div>
         <div
           className={cn(
@@ -109,6 +89,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     );
   },
 );
+
 Slider.displayName = 'Slider';
 
 export { Slider };

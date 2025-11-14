@@ -21,7 +21,9 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
   ({ type = 'single', defaultValue, value, onValueChange, children, className, ...props }, ref) => {
     const [openItems, setOpenItems] = React.useState<string[]>(() => {
       if (value) return Array.isArray(value) ? value : [value];
+
       if (defaultValue) return Array.isArray(defaultValue) ? defaultValue : [defaultValue];
+
       return [];
     });
 
@@ -35,14 +37,15 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
       (itemValue: string) => {
         setOpenItems((prev) => {
           let newValue: string[];
+
           if (type === 'single') {
             newValue = prev.includes(itemValue) ? [] : [itemValue];
           } else {
-            newValue = prev.includes(itemValue)
-              ? prev.filter((v) => v !== itemValue)
-              : [...prev, itemValue];
+            newValue = prev.includes(itemValue) ? prev.filter((v) => v !== itemValue) : [...prev, itemValue];
           }
+
           onValueChange?.(type === 'single' ? newValue[0] || '' : newValue);
+
           return newValue;
         });
       },
@@ -58,17 +61,17 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
     );
   },
 );
+
 Accordion.displayName = 'Accordion';
 
 interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
 }
 
-const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
-  ({ className, value, ...props }, ref) => {
-    return <div ref={ref} className={cn('border-b', className)} data-value={value} {...props} />;
-  },
-);
+const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(({ className, value, ...props }, ref) => {
+  return <div ref={ref} className={cn('border-b', className)} data-value={value} {...props} />;
+});
+
 AccordionItem.displayName = 'AccordionItem';
 
 type AccordionTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -83,10 +86,10 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
     const isOpen = context.openItems.includes(parent.value);
 
     return (
-      <div className="flex">
+      <div className='flex'>
         <button
           ref={ref}
-          type="button"
+          type='button'
           className={cn(
             'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline',
             className,
@@ -96,17 +99,13 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
           {...props}
         >
           {children}
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 shrink-0 transition-transform duration-200',
-              isOpen && 'rotate-180',
-            )}
-          />
+          <ChevronDown className={cn('h-4 w-4 shrink-0 transition-transform duration-200', isOpen && 'rotate-180')} />
         </button>
       </div>
     );
   },
 );
+
 AccordionTrigger.displayName = 'AccordionTrigger';
 
 interface AccordionItemContextType {
@@ -114,14 +113,8 @@ interface AccordionItemContextType {
 }
 
 const AccordionItemContext = React.createContext<AccordionItemContextType | undefined>(undefined);
-
-const AccordionItemProvider: React.FC<{ value: string; children: React.ReactNode }> = ({
-  value,
-  children,
-}) => {
-  return (
-    <AccordionItemContext.Provider value={{ value }}>{children}</AccordionItemContext.Provider>
-  );
+const AccordionItemProvider: React.FC<{ value: string; children: React.ReactNode }> = ({ value, children }) => {
+  return <AccordionItemContext.Provider value={{ value }}>{children}</AccordionItemContext.Provider>;
 };
 
 type AccordionContentProps = React.HTMLAttributes<HTMLDivElement>;
@@ -154,9 +147,9 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
     );
   },
 );
+
 AccordionContent.displayName = 'AccordionContent';
 
-// Wrapper to provide context
 const AccordionItemWrapper = React.forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ value, children, ...props }, ref) => {
     return (
@@ -168,6 +161,7 @@ const AccordionItemWrapper = React.forwardRef<HTMLDivElement, AccordionItemProps
     );
   },
 );
+
 AccordionItemWrapper.displayName = 'AccordionItem';
 
 export { Accordion, AccordionItemWrapper as AccordionItem, AccordionTrigger, AccordionContent };

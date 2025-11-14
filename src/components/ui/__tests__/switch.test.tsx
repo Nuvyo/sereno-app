@@ -7,8 +7,10 @@ import { Switch } from '@/components/ui/switch';
 describe('Switch', () => {
   it('alterna estado ao clicar', async () => {
     const user = userEvent.setup();
-    render(<Switch aria-label="ativar" />);
+
+    render(<Switch aria-label='ativar' />);
     const input = screen.getByLabelText('ativar') as HTMLInputElement;
+
     expect(input.checked).toBe(false);
     await user.click(input);
     expect(input.checked).toBe(true);

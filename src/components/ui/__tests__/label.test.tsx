@@ -6,17 +6,17 @@ import { Label } from '@/components/ui/label';
 describe('Label', () => {
   it('renderiza texto da label', () => {
     const { getByText } = render(<Label>Nome</Label>);
+
     expect(getByText('Nome')).toBeInTheDocument();
   });
 
   it('associa com input via htmlFor', () => {
     const { container } = render(
       <div>
-        <Label htmlFor="name">Nome</Label>
-        <input id="name" type="text" />
+        <Label htmlFor='name'>Nome</Label>
+        <input id='name' type='text' />
       </div>,
     );
-
     const label = within(container).getByText('Nome');
     const input = within(container).getByRole('textbox');
 
@@ -25,8 +25,9 @@ describe('Label', () => {
   });
 
   it('aplica classes customizadas', () => {
-    const { getByText } = render(<Label className="text-red-500">Erro</Label>);
+    const { getByText } = render(<Label className='text-red-500'>Erro</Label>);
     const label = getByText('Erro');
+
     expect(label).toHaveClass('text-red-500');
   });
 });

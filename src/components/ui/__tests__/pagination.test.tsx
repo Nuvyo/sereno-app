@@ -1,6 +1,5 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import {
   Pagination,
@@ -18,21 +17,21 @@ describe('Pagination', () => {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious href='#' />
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink href="#" isActive>
+            <PaginationLink href='#' isActive>
               1
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink href="#">2</PaginationLink>
+            <PaginationLink href='#'>2</PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext href='#' />
           </PaginationItem>
         </PaginationContent>
       </Pagination>,
@@ -47,13 +46,13 @@ describe('Pagination', () => {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationLink href="/page/1">1</PaginationLink>
+            <PaginationLink href='/page/1'>1</PaginationLink>
           </PaginationItem>
         </PaginationContent>
       </Pagination>,
     );
-
     const link = container.querySelector('a[href="/page/1"]');
+
     expect(link).toBeInTheDocument();
   });
 
@@ -62,7 +61,7 @@ describe('Pagination', () => {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationLink href="#" isActive>
+            <PaginationLink href='#' isActive>
               Ativa
             </PaginationLink>
           </PaginationItem>

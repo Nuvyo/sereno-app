@@ -10,19 +10,18 @@ import NotFound from '@/pages/NotFound';
 import ServerStatus from '@/pages/ServerStatus';
 
 const queryClient = new QueryClient();
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="system">
+    <ThemeProvider defaultTheme='system'>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<div className="p-4 text-sm text-muted-foreground">Carregando…</div>}>
+          <Suspense fallback={<div className='p-4 text-sm text-muted-foreground'>Carregando…</div>}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/server-status" element={<ServerStatus />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/server-status' element={<ServerStatus />} />
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </Suspense>
         </BrowserRouter>

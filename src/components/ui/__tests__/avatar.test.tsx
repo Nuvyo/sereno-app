@@ -17,12 +17,12 @@ describe('Avatar', () => {
   it('renderiza imagem quando src é fornecido', () => {
     const { container } = render(
       <Avatar>
-        <AvatarImage src="/avatar.jpg" alt="Avatar" />
+        <AvatarImage src='/avatar.jpg' alt='Avatar' />
         <AvatarFallback>JD</AvatarFallback>
       </Avatar>,
     );
-
     const image = within(container).getByAltText('Avatar');
+
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('src', '/avatar.jpg');
   });
@@ -30,13 +30,12 @@ describe('Avatar', () => {
   it('mostra fallback quando imagem falha ao carregar', () => {
     const { container } = render(
       <Avatar>
-        <AvatarImage src="/invalid.jpg" alt="Avatar" />
+        <AvatarImage src='/invalid.jpg' alt='Avatar' />
         <AvatarFallback>JD</AvatarFallback>
       </Avatar>,
     );
-
     const image = within(container).getByAltText('Avatar');
-    // Simula erro de carregamento
+
     image.dispatchEvent(new Event('error'));
 
     expect(within(container).getByText('JD')).toBeInTheDocument();

@@ -10,6 +10,7 @@ const Avatar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
     />
   ),
 );
+
 Avatar.displayName = 'Avatar';
 
 type AvatarImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
@@ -17,7 +18,6 @@ type AvatarImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
   ({ className, src, alt = '', onError, ...props }, ref) => {
     const [error, setError] = React.useState(false);
-
     const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
       setError(true);
       onError?.(e);
@@ -37,20 +37,19 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
     );
   },
 );
+
 AvatarImage.displayName = 'AvatarImage';
 
 const AvatarFallback = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        'flex h-full w-full items-center justify-center rounded-full bg-muted',
-        className,
-      )}
+      className={cn('flex h-full w-full items-center justify-center rounded-full bg-muted', className)}
       {...props}
     />
   ),
 );
+
 AvatarFallback.displayName = 'AvatarFallback';
 
 export { Avatar, AvatarImage, AvatarFallback };
