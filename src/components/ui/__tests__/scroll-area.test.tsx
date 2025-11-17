@@ -6,11 +6,11 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 describe('ScrollArea', () => {
   it('renderiza área de scroll', () => {
     render(
-      <ScrollArea className="h-[200px] w-[350px] rounded-md border">
-        <div className="p-4">
-          <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+      <ScrollArea className='h-[200px] w-[350px] rounded-md border'>
+        <div className='p-4'>
+          <h4 className='mb-4 text-sm font-medium leading-none'>Tags</h4>
           {Array.from({ length: 50 }).map((_, i) => (
-            <div key={i} className="text-sm">
+            <div key={i} className='text-sm'>
               Item {i + 1}
             </div>
           ))}
@@ -25,8 +25,8 @@ describe('ScrollArea', () => {
 
   it('renderiza com scroll bar', () => {
     render(
-      <ScrollArea className="h-72 w-48 rounded-md border">
-        <div className="p-4">Conteúdo longo que precisa de scroll...</div>
+      <ScrollArea className='h-72 w-48 rounded-md border'>
+        <div className='p-4'>Conteúdo longo que precisa de scroll...</div>
         <ScrollBar />
       </ScrollArea>,
     );
@@ -36,7 +36,7 @@ describe('ScrollArea', () => {
 
   it('aplica classes customizadas', () => {
     render(
-      <ScrollArea className="custom-scroll">
+      <ScrollArea className='custom-scroll'>
         <div>Conteúdo</div>
       </ScrollArea>,
     );

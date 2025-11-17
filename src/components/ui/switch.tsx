@@ -18,16 +18,17 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = e.target.checked;
+
       setIsChecked(newChecked);
       onCheckedChange?.(newChecked);
     };
 
     return (
-      <label className="relative inline-flex items-center">
+      <label className='relative inline-flex items-center'>
         <input
           ref={ref}
-          type="checkbox"
-          className="sr-only peer"
+          type='checkbox'
+          className='sr-only peer'
           checked={isChecked}
           onChange={handleChange}
           disabled={disabled}
@@ -53,6 +54,7 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     );
   },
 );
+
 Switch.displayName = 'Switch';
 
 export { Switch };

@@ -18,17 +18,7 @@ interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'on
 }
 
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
-  (
-    {
-      className,
-      value,
-      defaultValue,
-      onValueChange,
-      name = `radio-group-${Math.random()}`,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, value, defaultValue, onValueChange, name = `radio-group-${Math.random()}`, ...props }, ref) => {
     const [selectedValue, setSelectedValue] = React.useState(value || defaultValue);
 
     React.useEffect(() => {
@@ -42,6 +32,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         if (value === undefined) {
           setSelectedValue(newValue);
         }
+
         onValueChange?.(newValue);
       },
       [value, onValueChange],
@@ -49,11 +40,12 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
 
     return (
       <RadioGroupContext.Provider value={{ value: selectedValue, onChange, name }}>
-        <div ref={ref} role="radiogroup" className={cn('grid gap-2', className)} {...props} />
+        <div ref={ref} role='radiogroup' className={cn('grid gap-2', className)} {...props} />
       </RadioGroupContext.Provider>
     );
   },
 );
+
 RadioGroup.displayName = 'RadioGroup';
 
 interface RadioGroupItemProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -63,18 +55,19 @@ interface RadioGroupItemProps extends Omit<React.InputHTMLAttributes<HTMLInputEl
 const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
   ({ className, value, ...props }, ref) => {
     const context = React.useContext(RadioGroupContext);
+
     if (!context) throw new Error('RadioGroupItem must be used within RadioGroup');
 
     const isChecked = context.value === value;
     const id = React.useId();
 
     return (
-      <div className="relative inline-flex items-center">
+      <div className='relative inline-flex items-center'>
         <input
           ref={ref}
           id={props.id || id}
-          type="radio"
-          className="absolute h-4 w-4 opacity-0 cursor-pointer peer"
+          type='radio'
+          className='absolute h-4 w-4 opacity-0 cursor-pointer peer'
           checked={isChecked}
           name={context.name}
           value={value}
@@ -91,12 +84,13 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
             className,
           )}
         >
-          {isChecked && <Circle className="h-2.5 w-2.5 fill-current text-current" />}
+          {isChecked && <Circle className='h-2.5 w-2.5 fill-current text-current' />}
         </label>
       </div>
     );
   },
 );
+
 RadioGroupItem.displayName = 'RadioGroupItem';
 
 export { RadioGroup, RadioGroupItem };

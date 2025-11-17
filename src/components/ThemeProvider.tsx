@@ -7,27 +7,22 @@ interface ThemeProviderProps {
   storageKey?: string;
 }
 
-export function ThemeProvider({
-  children,
-  defaultTheme = 'system',
-  storageKey = 'ui-theme',
-}: ThemeProviderProps) {
+export function ThemeProvider({ children, defaultTheme = 'system', storageKey = 'ui-theme' }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => {
     const stored = localStorage.getItem(storageKey);
+
     return (stored as Theme) || defaultTheme;
   });
-
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     const root = window.document.documentElement;
-
     const getSystemTheme = (): 'light' | 'dark' => {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     };
-
     const applyTheme = (currentTheme: Theme) => {
       const resolved = currentTheme === 'system' ? getSystemTheme() : currentTheme;
+
       setResolvedTheme(resolved);
 
       root.classList.remove('light', 'dark');
@@ -44,6 +39,7 @@ export function ThemeProvider({
     };
 
     mediaQuery.addEventListener('change', handleChange);
+
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
@@ -52,9 +48,5 @@ export function ThemeProvider({
     setThemeState(newTheme);
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>{children}</ThemeContext.Provider>;
 }

@@ -7,8 +7,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 describe('Checkbox', () => {
   it('marca e desmarca ao clicar', async () => {
     const user = userEvent.setup();
-    render(<Checkbox aria-label="aceitar" />);
+
+    render(<Checkbox aria-label='aceitar' />);
     const input = screen.getByLabelText('aceitar') as HTMLInputElement;
+
     expect(input.checked).toBe(false);
     await user.click(input);
     expect(input.checked).toBe(true);

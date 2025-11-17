@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 
-// Smoke test que garante que todos os módulos de components (nível raiz) podem ser importados
 const modules = import.meta.glob('../*.tsx', { eager: true });
 
 describe('Components modules import', () => {

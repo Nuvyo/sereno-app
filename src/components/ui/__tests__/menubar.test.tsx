@@ -9,15 +9,6 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarSeparator,
-  MenubarLabel,
-  MenubarCheckboxItem,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarPortal,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarGroup,
-  MenubarSub,
 } from '@/components/ui/menubar';
 
 describe('Menubar', () => {
@@ -49,6 +40,7 @@ describe('Menubar', () => {
 
   it('abre menu ao clicar', async () => {
     const user = userEvent.setup();
+
     render(
       <Menubar>
         <MenubarMenu>
@@ -62,6 +54,7 @@ describe('Menubar', () => {
     );
 
     const trigger = screen.getByText('Menu');
+
     await user.click(trigger);
 
     expect(screen.getByText('Item 1')).toBeInTheDocument();
@@ -84,9 +77,11 @@ describe('Menubar', () => {
     );
 
     const trigger = screen.getAllByText('Menu').pop() as HTMLElement;
+
     await user.click(trigger);
 
     const item = screen.getAllByText('Ação').pop() as HTMLElement;
+
     await user.click(item);
 
     expect(onSelect).toHaveBeenCalled();

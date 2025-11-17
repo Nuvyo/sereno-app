@@ -2,24 +2,19 @@ import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-// Mock do recharts
 vi.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="responsive-container">{children}</div>
+    <div data-testid='responsive-container'>{children}</div>
   ),
-  LineChart: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="line-chart">{children}</div>
-  ),
-  BarChart: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="bar-chart">{children}</div>
-  ),
-  CartesianGrid: () => <div data-testid="cartesian-grid" />,
-  XAxis: () => <div data-testid="x-axis" />,
-  YAxis: () => <div data-testid="y-axis" />,
-  Line: () => <div data-testid="line" />,
-  Bar: () => <div data-testid="bar" />,
-  Tooltip: () => <div data-testid="tooltip" />,
-  Legend: () => <div data-testid="legend" />,
+  LineChart: ({ children }: { children: React.ReactNode }) => <div data-testid='line-chart'>{children}</div>,
+  BarChart: ({ children }: { children: React.ReactNode }) => <div data-testid='bar-chart'>{children}</div>,
+  CartesianGrid: () => <div data-testid='cartesian-grid' />,
+  XAxis: () => <div data-testid='x-axis' />,
+  YAxis: () => <div data-testid='y-axis' />,
+  Line: () => <div data-testid='line' />,
+  Bar: () => <div data-testid='bar' />,
+  Tooltip: () => <div data-testid='tooltip' />,
+  Legend: () => <div data-testid='legend' />,
 }));
 
 import {

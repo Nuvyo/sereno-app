@@ -18,12 +18,12 @@ describe('NavigationMenu', () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Produtos</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <NavigationMenuLink href="/produtos/categoria1">Categoria 1</NavigationMenuLink>
-              <NavigationMenuLink href="/produtos/categoria2">Categoria 2</NavigationMenuLink>
+              <NavigationMenuLink href='/produtos/categoria1'>Categoria 1</NavigationMenuLink>
+              <NavigationMenuLink href='/produtos/categoria2'>Categoria 2</NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="/sobre">Sobre</NavigationMenuLink>
+            <NavigationMenuLink href='/sobre'>Sobre</NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>,
@@ -38,22 +38,23 @@ describe('NavigationMenu', () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink href="/home">Home</NavigationMenuLink>
+            <NavigationMenuLink href='/home'>Home</NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>,
     );
 
     const link = screen.getByRole('link', { name: 'Home' });
+
     expect(link).toHaveAttribute('href', '/home');
   });
 
   it('renderiza com classes customizadas', () => {
     render(
-      <NavigationMenu className="custom-nav">
+      <NavigationMenu className='custom-nav'>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink href="/test">Test</NavigationMenuLink>
+            <NavigationMenuLink href='/test'>Test</NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>,

@@ -7,8 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 describe('Textarea', () => {
   it('aceita digitação', async () => {
     const user = userEvent.setup();
-    render(<Textarea placeholder="msg" />);
+
+    render(<Textarea placeholder='msg' />);
     const input = screen.getByPlaceholderText('msg') as HTMLTextAreaElement;
+
     await user.type(input, 'olá mundo');
     expect(input.value).toBe('olá mundo');
   });

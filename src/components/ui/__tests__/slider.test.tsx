@@ -9,9 +9,8 @@ describe('Slider', () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const { container } = render(<Slider onValueChange={onValueChange} />);
-
-    // Seleciona a trilha pelo utilitário de classe do Tailwind presente no componente
     const track = container.querySelector('.bg-secondary') as HTMLElement;
+
     await user.click(track);
     expect(onValueChange).toHaveBeenCalled();
   });

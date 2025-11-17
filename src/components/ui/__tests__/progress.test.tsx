@@ -23,6 +23,7 @@ describe('Progress', () => {
   it('mantém aria-valuenow mesmo fora dos limites (visual é limitado)', () => {
     const { container, rerender } = render(<Progress value={150} />);
     let progressBar = container.querySelector('[role="progressbar"]');
+
     expect(progressBar).toHaveAttribute('aria-valuenow', '150');
 
     rerender(<Progress value={-10} />);
@@ -31,8 +32,9 @@ describe('Progress', () => {
   });
 
   it('aplica classes customizadas', () => {
-    const { container } = render(<Progress value={30} className="bg-red-200" />);
+    const { container } = render(<Progress value={30} className='bg-red-200' />);
     const progressBar = container.querySelector('[role="progressbar"]');
+
     expect(progressBar).toHaveClass('bg-red-200');
   });
 });

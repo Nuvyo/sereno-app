@@ -1,0 +1,38 @@
+name: Dev CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apt-get update
+        run: sudo apt-get update
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run prettier linter
+        run: npm run lint:prettier
+
+      - name: Run eslint linter
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test

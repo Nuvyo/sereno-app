@@ -17,6 +17,7 @@ import {
 describe('AlertDialog', () => {
   it('renderiza trigger e abre modal', async () => {
     const user = userEvent.setup();
+
     render(
       <AlertDialog>
         <AlertDialogTrigger>Abrir Dialog</AlertDialogTrigger>
@@ -34,6 +35,7 @@ describe('AlertDialog', () => {
     );
 
     const trigger = screen.getByText('Abrir Dialog');
+
     await user.click(trigger);
 
     expect(screen.getByText('Confirmar ação')).toBeInTheDocument();
@@ -55,6 +57,7 @@ describe('AlertDialog', () => {
     );
 
     const cancelBtn = screen.getAllByText('Cancelar').pop() as HTMLElement;
+
     await user.click(cancelBtn);
     expect(onCancel).toHaveBeenCalledTimes(1);
   });

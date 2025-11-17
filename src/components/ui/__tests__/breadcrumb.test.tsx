@@ -16,11 +16,11 @@ describe('Breadcrumb', () => {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbLink href='/'>Home</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/products">Produtos</BreadcrumbLink>
+            <BreadcrumbLink href='/products'>Produtos</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -40,13 +40,13 @@ describe('Breadcrumb', () => {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/home">Home</BreadcrumbLink>
+            <BreadcrumbLink href='/home'>Home</BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>,
     );
-
     const link = container.querySelector('a[href="/home"]');
+
     expect(link).toBeInTheDocument();
   });
 });

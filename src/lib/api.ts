@@ -1,4 +1,3 @@
-// API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export interface ApiResponse<T = unknown> {
@@ -21,12 +20,8 @@ class ApiService {
     this.baseURL = baseURL;
   }
 
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -37,9 +32,10 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      
+
       if (!response.ok) {
         const errorData: ApiError = await response.json();
+
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
@@ -64,7 +60,7 @@ class ApiService {
   async post<T>(
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'POST',
@@ -77,7 +73,7 @@ class ApiService {
   async put<T>(
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
@@ -87,10 +83,7 @@ class ApiService {
   }
 
   // DELETE request
-  async delete<T>(
-    endpoint: string,
-    headers?: Record<string, string>
-  ): Promise<T> {
+  async delete<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'DELETE',
       headers,
@@ -101,7 +94,7 @@ class ApiService {
   async patch<T>(
     endpoint: string,
     data?: Record<string, unknown> | unknown[],
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PATCH',
@@ -110,25 +103,20 @@ class ApiService {
     });
   }
 
-  // Set Authorization header for authenticated requests
   withAuth(token: string) {
     return {
-      get: <T>(endpoint: string) => 
-        this.get<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      post: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) => 
+      get: <T>(endpoint: string) => this.get<T>(endpoint, { Authorization: `Bearer ${token}` }),
+      post: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
         this.post<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-      put: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) => 
+      put: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
         this.put<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-      delete: <T>(endpoint: string) => 
-        this.delete<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      patch: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) => 
+      delete: <T>(endpoint: string) => this.delete<T>(endpoint, { Authorization: `Bearer ${token}` }),
+      patch: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
         this.patch<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
     };
   }
 }
 
-// Export singleton instance
 export const apiService = new ApiService();
 
-// Export class for custom instances if needed
 export default ApiService;

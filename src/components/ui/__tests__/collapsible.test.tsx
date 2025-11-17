@@ -7,6 +7,7 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/component
 describe('Collapsible', () => {
   it('renderiza trigger e expande conteúdo', async () => {
     const user = userEvent.setup();
+
     render(
       <Collapsible>
         <CollapsibleTrigger>Expandir</CollapsibleTrigger>
@@ -15,6 +16,7 @@ describe('Collapsible', () => {
     );
 
     const trigger = screen.getByText('Expandir');
+
     expect(trigger).toBeInTheDocument();
 
     await user.click(trigger);
@@ -23,6 +25,7 @@ describe('Collapsible', () => {
 
   it('controla estado externamente', () => {
     const onOpenChange = vi.fn();
+
     render(
       <Collapsible open={true} onOpenChange={onOpenChange}>
         <CollapsibleTrigger>Trigger</CollapsibleTrigger>

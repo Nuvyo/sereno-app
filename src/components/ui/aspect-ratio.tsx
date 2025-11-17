@@ -14,11 +14,12 @@ const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
         style={{ paddingBottom: `${100 / ratio}%`, ...style }}
         {...props}
       >
-        <div className="absolute inset-0">{children}</div>
+        <div className='absolute inset-0'>{children}</div>
       </div>
     );
   },
 );
+
 AspectRatio.displayName = 'AspectRatio';
 
 export { AspectRatio };

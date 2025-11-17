@@ -19,19 +19,19 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = e.target.checked;
+
       setIsChecked(newChecked);
       onCheckedChange?.(newChecked);
     };
-
     const id = React.useId();
 
     return (
-      <div className="relative inline-flex items-center">
+      <div className='relative inline-flex items-center'>
         <input
           ref={ref}
           id={props.id || id}
-          type="checkbox"
-          className="absolute h-4 w-4 opacity-0 cursor-pointer peer"
+          type='checkbox'
+          className='absolute h-4 w-4 opacity-0 cursor-pointer peer'
           checked={isChecked}
           onChange={handleChange}
           disabled={disabled}
@@ -48,8 +48,8 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           )}
         >
           {isChecked && (
-            <div className="flex items-center justify-center text-current">
-              <Check className="h-4 w-4" />
+            <div className='flex items-center justify-center text-current'>
+              <Check className='h-4 w-4' />
             </div>
           )}
         </label>
@@ -57,6 +57,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     );
   },
 );
+
 Checkbox.displayName = 'Checkbox';
 
 export { Checkbox };

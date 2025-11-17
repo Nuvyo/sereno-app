@@ -6,10 +6,10 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 describe('ToggleGroup', () => {
   it('renderiza grupo de toggles', () => {
     render(
-      <ToggleGroup type="single">
-        <ToggleGroupItem value="left">Esquerda</ToggleGroupItem>
-        <ToggleGroupItem value="center">Centro</ToggleGroupItem>
-        <ToggleGroupItem value="right">Direita</ToggleGroupItem>
+      <ToggleGroup type='single'>
+        <ToggleGroupItem value='left'>Esquerda</ToggleGroupItem>
+        <ToggleGroupItem value='center'>Centro</ToggleGroupItem>
+        <ToggleGroupItem value='right'>Direita</ToggleGroupItem>
       </ToggleGroup>,
     );
 
@@ -20,9 +20,9 @@ describe('ToggleGroup', () => {
 
   it('permite seleção múltipla', () => {
     render(
-      <ToggleGroup type="multiple">
-        <ToggleGroupItem value="bold">Negrito</ToggleGroupItem>
-        <ToggleGroupItem value="italic">Itálico</ToggleGroupItem>
+      <ToggleGroup type='multiple'>
+        <ToggleGroupItem value='bold'>Negrito</ToggleGroupItem>
+        <ToggleGroupItem value='italic'>Itálico</ToggleGroupItem>
       </ToggleGroup>,
     );
 
@@ -32,13 +32,13 @@ describe('ToggleGroup', () => {
 
   it('renderiza com valor padrão', () => {
     const { container } = render(
-      <ToggleGroup type="single" defaultValue="center">
-        <ToggleGroupItem value="left">Esquerda</ToggleGroupItem>
-        <ToggleGroupItem value="center">Centro</ToggleGroupItem>
+      <ToggleGroup type='single' defaultValue='center'>
+        <ToggleGroupItem value='left'>Esquerda</ToggleGroupItem>
+        <ToggleGroupItem value='center'>Centro</ToggleGroupItem>
       </ToggleGroup>,
     );
-
     const selected = container.querySelector('button[aria-pressed="true"]');
+
     expect(selected).toBeTruthy();
     expect(selected?.textContent).toMatch(/Centro/i);
   });

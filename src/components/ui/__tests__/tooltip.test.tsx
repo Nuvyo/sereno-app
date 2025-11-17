@@ -19,6 +19,7 @@ describe('Tooltip', () => {
 
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
     const trigger = screen.getByRole('button', { name: /info/i });
+
     await user.hover(trigger);
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
     await user.unhover(trigger);

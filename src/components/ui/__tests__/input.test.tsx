@@ -7,8 +7,10 @@ import { Input } from '@/components/ui/input';
 describe('Input', () => {
   it('aceita digitação', async () => {
     const user = userEvent.setup();
-    render(<Input placeholder="digite" />);
+
+    render(<Input placeholder='digite' />);
     const input = screen.getByPlaceholderText('digite') as HTMLInputElement;
+
     await user.type(input, 'abc');
     expect(input.value).toBe('abc');
   });

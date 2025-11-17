@@ -9,13 +9,13 @@ describe('Tabs', () => {
     const user = userEvent.setup();
 
     render(
-      <Tabs defaultValue="a">
+      <Tabs defaultValue='a'>
         <TabsList>
-          <TabsTrigger value="a">A</TabsTrigger>
-          <TabsTrigger value="b">B</TabsTrigger>
+          <TabsTrigger value='a'>A</TabsTrigger>
+          <TabsTrigger value='b'>B</TabsTrigger>
         </TabsList>
-        <TabsContent value="a">Conteúdo A</TabsContent>
-        <TabsContent value="b">Conteúdo B</TabsContent>
+        <TabsContent value='a'>Conteúdo A</TabsContent>
+        <TabsContent value='b'>Conteúdo B</TabsContent>
       </Tabs>,
     );
 

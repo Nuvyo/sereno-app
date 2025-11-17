@@ -22,10 +22,8 @@ describe('Dialog', () => {
     await user.click(screen.getByRole('button', { name: /open/i }));
     expect(screen.getByText('Mensagem')).toBeInTheDocument();
 
-    // fecha pelo botão de fechar
     await user.click(screen.getByRole('button', { name: /close/i }));
 
-    // Conteúdo deve desaparecer após fechar
     expect(screen.queryByText('Mensagem')).not.toBeInTheDocument();
   });
 });
