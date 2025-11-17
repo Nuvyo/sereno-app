@@ -10,7 +10,6 @@ describe('NotFound page', () => {
     renderWithProviders(<NotFound />, { route: '/rota-inexistente' });
 
     expect(screen.getByText(/404/i)).toBeInTheDocument();
-    // Texto em português conforme componente atual
     expect(screen.getByText(/página não encontrada/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /voltar para a página inicial/i })).toBeInTheDocument();
 
