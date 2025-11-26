@@ -27,7 +27,7 @@ export function useAuthApiGet<T>(
   });
 }
 
-export function useApiPost<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
+export function useApiPost<TData, TVariables extends Record<string, any> | any[] = Record<string, any>>(
   endpoint: string,
   options?: UseMutationOptions<TData, Error, TVariables>,
 ) {
@@ -37,7 +37,7 @@ export function useApiPost<TData, TVariables extends Record<string, unknown> | u
   });
 }
 
-export function useAuthApiPost<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
+export function useAuthApiPost<TData, TVariables extends Record<string, any> | any[] = Record<string, any>>(
   endpoint: string,
   token: string,
   options?: UseMutationOptions<TData, Error, TVariables>,
@@ -48,7 +48,7 @@ export function useAuthApiPost<TData, TVariables extends Record<string, unknown>
   });
 }
 
-export function useApiPut<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
+export function useApiPut<TData, TVariables extends Record<string, any> | any[] = Record<string, any>>(
   endpoint: string,
   options?: UseMutationOptions<TData, Error, TVariables>,
 ) {
@@ -58,7 +58,7 @@ export function useApiPut<TData, TVariables extends Record<string, unknown> | un
   });
 }
 
-export function useAuthApiPut<TData, TVariables extends Record<string, unknown> | unknown[] = Record<string, unknown>>(
+export function useAuthApiPut<TData, TVariables extends Record<string, any> | any[] = Record<string, any>>(
   endpoint: string,
   token: string,
   options?: UseMutationOptions<TData, Error, TVariables>,
