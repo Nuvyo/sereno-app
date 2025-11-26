@@ -28,7 +28,7 @@ export default function Signup() {
   const form = useForm<SignupFormValues>({
     defaultValues: new SignupFormValues(),
   });
-  const { mutateAsync, isPending } = useApiPost<IUser>('/v1/auth/signup');
+  const { mutateAsync: post, isPending } = useApiPost<IUser>('/v1/auth/signup');
 
   const onSubmit = (body: SignupFormValues) => {
     if (body.password !== body.passwordConfirmation) {
@@ -36,9 +36,7 @@ export default function Signup() {
       return;
     }
 
-    console.log(body);
-
-    mutateAsync(body)
+    post(body)
       .then(() => {
         toast.success('Usuário cadastrado com sucesso!', { position: 'top-center' });
       })
