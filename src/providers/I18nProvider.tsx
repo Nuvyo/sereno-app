@@ -12,6 +12,8 @@ export function I18nProvider({ children }: I18nProviderProps) {
   useEffect(() => {
     if (!i18n.isInitialized) {
       i18n.init();
+
+      localStorage.setItem('language', i18n.language);
     }
   }, []);
 

@@ -35,6 +35,7 @@ class ApiService {
       return {
         body: rawBody ?? null,
         headers: {
+          language: localStorage.getItem('language') || 'ptbr',
           ...(options.headers ?? {}),
         },
       };
@@ -45,6 +46,7 @@ class ApiService {
       return {
         body: rawBody,
         headers: {
+          language: localStorage.getItem('language') || 'ptbr',
           'Content-Type': 'application/json',
           ...(options.headers ?? {}),
         },
@@ -56,6 +58,7 @@ class ApiService {
     return {
       body: hasJsonBody ? JSON.stringify(rawBody) : undefined,
       headers: {
+        language: localStorage.getItem('language') || 'ptbr',
         'Content-Type': 'application/json',
         ...(options.headers ?? {}),
       },

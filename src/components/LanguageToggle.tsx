@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 export function LanguageToggle() {
   const { t } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState('pt');
+  const [currentLanguage, setCurrentLanguage] = useState('ptbr');
 
   useEffect(() => {
     // Initialize i18n and set up language change listener
@@ -38,13 +38,14 @@ export function LanguageToggle() {
   }, []);
 
   const languages = [
-    { code: 'pt', label: 'Português' },
+    { code: 'ptbr', label: 'Português' },
     { code: 'en', label: 'English' },
   ];
 
   const handleLanguageChange = (langCode: string) => {
     if (i18n && typeof i18n.changeLanguage === 'function') {
       i18n.changeLanguage(langCode);
+      localStorage.setItem('language', langCode);
     } else {
       console.error('i18n.changeLanguage is not available');
     }

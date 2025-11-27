@@ -29,19 +29,50 @@ export default function Signup() {
     defaultValues: new SignupFormValues(),
   });
   const { mutateAsync: post, isPending } = useApiPost<IUser>('/v1/auth/signup');
+  const validateBody = (body: SignupFormValues) => {
+    if (!body.name) {
+      toast.error(t('form.nameRequired'));
+      return false;
+    }
+
+    if (!body.email) {
+      toast.error(t('form.emailRequired'));
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(body.email)) {
+      toast.error(t('form.invalidEmail'));
+      return false;
+    }
+
+    if (body.password.length < 8) {
+      toast.error(t('form.passwordTooShort'));
+      return false;
+    }
+
+    if (body.password !== body.passwordConfirmation) {
+      toast.error(t('form.passwordsDoNotMatch'));
+      return false;
+    }
+
+    return true;
+  };
 
   const onSubmit = (body: SignupFormValues) => {
-    if (body.password !== body.passwordConfirmation) {
-      toast.error(t('error.passwordsDoNotMatch'), { position: 'top-center' });
+    const isValid = validateBody(body);
+
+    if (!isValid) {
       return;
     }
 
     post(body)
       .then(() => {
-        toast.success('Usuário cadastrado com sucesso!', { position: 'top-center' });
+        toast.success(t('userRegisteredSuccessfully'));
       })
       .catch((error) => {
-        toast.error(`Erro ao cadastrar usuário: ${error.message}`, { position: 'top-center' });
+        toast.error(error.message || t('serverError'));
       });
   };
 
