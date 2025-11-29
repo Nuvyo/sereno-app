@@ -59,7 +59,6 @@ export default function Signup() {
 
     return true;
   };
-
   const onSubmit = (body: SignupFormValues) => {
     const isValid = validateBody(body);
 
