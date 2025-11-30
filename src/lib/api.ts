@@ -20,15 +20,55 @@ class ApiService {
     this.baseURL = baseURL;
   }
 
+  private buildBodyAndHeaders(options: RequestInit): { body?: BodyInit | null; headers?: HeadersInit } {
+    const rawBody = options.body as any;
+
+    // If using FormData/Blob/ArrayBuffer/ReadableStream, pass through and don't set JSON headers
+    const isFormData = typeof FormData !== 'undefined' && rawBody instanceof FormData;
+    const isBinary =
+      rawBody instanceof Blob ||
+      rawBody instanceof ArrayBuffer ||
+      (typeof ReadableStream !== 'undefined' && rawBody instanceof ReadableStream);
+
+    if (isFormData || isBinary) {
+      // Do not set Content-Type; browser will set correct boundary for FormData
+      return {
+        body: rawBody ?? null,
+        headers: {
+          language: localStorage.getItem('language') || 'ptbr',
+          ...(options.headers ?? {}),
+        },
+      };
+    }
+
+    // If body is already a string, assume caller set headers correctly
+    if (typeof rawBody === 'string') {
+      return {
+        body: rawBody,
+        headers: {
+          language: localStorage.getItem('language') || 'ptbr',
+          'Content-Type': 'application/json',
+          ...(options.headers ?? {}),
+        },
+      };
+    }
+
+    // For plain objects/arrays, JSON encode
+    const hasJsonBody = rawBody !== undefined && rawBody !== null;
+    return {
+      body: hasJsonBody ? JSON.stringify(rawBody) : undefined,
+      headers: {
+        language: localStorage.getItem('language') || 'ptbr',
+        'Content-Type': 'application/json',
+        ...(options.headers ?? {}),
+      },
+    };
+  }
+
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    };
+    const { body, headers } = this.buildBodyAndHeaders(options);
+    const config: RequestInit = { ...options, body, headers };
 
     try {
       const response = await fetch(url, config);
@@ -59,12 +99,12 @@ class ApiService {
   // POST request
   async post<T>(
     endpoint: string,
-    data?: Record<string, unknown> | unknown[],
+    data?: Record<string, unknown> | unknown[] | FormData | string | Blob,
     headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'POST',
-      body: data ? JSON.stringify(data) : undefined,
+      body: (data as any) ?? undefined,
       headers,
     });
   }
@@ -72,12 +112,12 @@ class ApiService {
   // PUT request
   async put<T>(
     endpoint: string,
-    data?: Record<string, unknown> | unknown[],
+    data?: Record<string, unknown> | unknown[] | FormData | string | Blob,
     headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
-      body: data ? JSON.stringify(data) : undefined,
+      body: (data as any) ?? undefined,
       headers,
     });
   }
@@ -93,12 +133,12 @@ class ApiService {
   // PATCH request
   async patch<T>(
     endpoint: string,
-    data?: Record<string, unknown> | unknown[],
+    data?: Record<string, unknown> | unknown[] | FormData | string | Blob,
     headers?: Record<string, string>,
   ): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PATCH',
-      body: data ? JSON.stringify(data) : undefined,
+      body: (data as any) ?? undefined,
       headers,
     });
   }
@@ -106,12 +146,12 @@ class ApiService {
   withAuth(token: string) {
     return {
       get: <T>(endpoint: string) => this.get<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      post: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
+      post: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
         this.post<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-      put: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
+      put: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
         this.put<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
       delete: <T>(endpoint: string) => this.delete<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      patch: <T>(endpoint: string, data?: Record<string, unknown> | unknown[]) =>
+      patch: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
         this.patch<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
     };
   }

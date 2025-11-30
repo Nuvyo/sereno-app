@@ -5,20 +5,10 @@ import { AlertCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatDate, formatRelativeDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
-
-interface ServerStatus {
-  updated_at: string;
-  dependencies: {
-    database: {
-      version: string;
-      max_connections: number;
-      opened_connections: number;
-    };
-  };
-}
+import { IServerStatus } from '@/interfaces/server-status';
 
 export default function ServerStatus() {
-  const { data: serverStatus, isLoading, error } = useApiGet<ServerStatus>([], '');
+  const { data: serverStatus, isLoading, error } = useApiGet<IServerStatus>([], '');
 
   if (isLoading) {
     return (
