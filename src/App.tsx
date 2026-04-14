@@ -11,6 +11,7 @@ import ServerStatus from '@/pages/ServerStatus';
 import Signup from '@/pages/auth/Signup';
 import Signin from '@/pages/auth/Signin';
 import { I18nProvider } from '@/providers/I18nProvider';
+import Account from '@/pages/auth/Account';
 
 const queryClient = new QueryClient();
 const App = () => (
@@ -27,6 +28,7 @@ const App = () => (
                 <Route path='/server-status' element={<ServerStatus />} />
                 <Route path='/auth/signup' element={<Signup />} />
                 <Route path='/auth/signin' element={<Signin />} />
+                <Route path='/auth/account' element={<Account />} />
                 <Route path='*' element={<NotFound />} />
               </Routes>
             </Suspense>

@@ -1,0 +1,26 @@
+export const EN_TRANSLATIONS = {
+  home: 'Home',
+  toggleTheme: 'Toggle theme',
+  toggleLanguage: 'Toggle language',
+  signUp: 'Sign Up',
+  signIn: 'Sign In',
+  signOut: 'Sign Out',
+  redirectToSignIn: 'Already have an account? Sign in here.',
+  redirectToSignUp: "Don't have an account yet? Sign up here.",
+  userRegisteredSuccessfully: 'User registered successfully!',
+  serverError: 'Server error! Please try again later or contact support.',
+  field: {
+    name: 'Name',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm password',
+  },
+  form: {
+    nameRequired: 'Name is required',
+    emailRequired: 'Email is required',
+    invalidEmail: 'Invalid email',
+    passwordRequired: 'Password is required',
+    passwordTooShort: 'Password must be at least 8 characters long',
+    passwordsDoNotMatch: 'Passwords do not match',
+  },
+};

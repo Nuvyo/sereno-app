@@ -13,10 +13,10 @@ export default function ServerStatus() {
   if (isLoading) {
     return (
       <Layout>
-        <h1 className='text-3xl font-bold text-foreground'>Status do Servidor</h1>
+        <h1 className='text-3xl font-bold text-foreground mb-2'>Status do Servidor</h1>
 
         <Card>
-          <div className='space-y-3'>
+          <div className='space-y-3 p-2'>
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-3/4' />
@@ -29,7 +29,7 @@ export default function ServerStatus() {
   if (error) {
     return (
       <Layout>
-        <h1 className='text-3xl font-bold text-foreground'>Status do Servidor</h1>
+        <h1 className='text-3xl font-bold text-foreground mb-2'>Status do Servidor</h1>
 
         <Alert variant='destructive'>
           <AlertCircle className='h-4 w-4' />
@@ -42,7 +42,7 @@ export default function ServerStatus() {
 
   return (
     <Layout>
-      <h1 className='text-3xl font-bold text-foreground'>Status do Servidor</h1>
+      <h1 className='text-3xl font-bold text-foreground mb-2'>Status do Servidor</h1>
 
       <Card className='p-6 space-y-4'>
         <div className='space-y-1'>

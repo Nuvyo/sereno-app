@@ -3,7 +3,7 @@
 import { Languages } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import i18n from '@/lib/i18n';
+import i18n from '@/lib/i18n/i18n';
 import {
   DropdownMenu,
   DropdownMenuContent,

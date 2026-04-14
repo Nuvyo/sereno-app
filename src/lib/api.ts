@@ -68,7 +68,12 @@ class ApiService {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const { body, headers } = this.buildBodyAndHeaders(options);
-    const config: RequestInit = { ...options, body, headers };
+    const config: RequestInit = {
+      ...options,
+      body,
+      headers,
+      credentials: 'include', // Incluir cookies nas requisições
+    };
 
     try {
       const response = await fetch(url, config);
@@ -141,19 +146,6 @@ class ApiService {
       body: (data as any) ?? undefined,
       headers,
     });
-  }
-
-  withAuth(token: string) {
-    return {
-      get: <T>(endpoint: string) => this.get<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      post: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
-        this.post<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-      put: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
-        this.put<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-      delete: <T>(endpoint: string) => this.delete<T>(endpoint, { Authorization: `Bearer ${token}` }),
-      patch: <T>(endpoint: string, data?: Record<string, unknown> | unknown[] | FormData | string | Blob) =>
-        this.patch<T>(endpoint, data, { Authorization: `Bearer ${token}` }),
-    };
   }
 }
 

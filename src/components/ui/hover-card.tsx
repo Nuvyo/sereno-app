@@ -8,7 +8,7 @@ interface HoverCardContextValue {
   openDelay: number;
   closeDelay: number;
   triggerRef: React.MutableRefObject<HTMLElement | null>;
-  hoverTimeoutIdRef: React.MutableRefObject<NodeJS.Timeout | null>;
+  hoverTimeoutIdRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
 }
 
 const HoverCardContext = React.createContext<HoverCardContextValue | undefined>(undefined);
@@ -31,7 +31,7 @@ interface HoverCardProps {
 const HoverCard = ({ children, openDelay = 200, closeDelay = 300 }: HoverCardProps) => {
   const [open, setOpen] = React.useState(false);
   const triggerRef = React.useRef<HTMLElement | null>(null);
-  const hoverTimeoutIdRef = React.useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   return (
     <HoverCardContext.Provider value={{ open, setOpen, openDelay, closeDelay, triggerRef, hoverTimeoutIdRef }}>

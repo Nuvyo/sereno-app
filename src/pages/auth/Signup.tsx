@@ -4,10 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { useApiPost } from '@/hooks/use-api';
-import { IUser } from '@/interfaces/user';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { ButtonLink } from '../../components/ui/button-link';
+import { ButtonLink } from '@/components/ui/button-link';
+import { useState } from 'react';
 
 class SignupFormValues {
   name: string;
@@ -25,10 +25,11 @@ class SignupFormValues {
 
 export default function Signup() {
   const { t } = useTranslation();
+  const [isPending, setIsPending] = useState(false);
   const form = useForm<SignupFormValues>({
     defaultValues: new SignupFormValues(),
   });
-  const { mutateAsync: post, isPending } = useApiPost<IUser>('/v1/auth/signup');
+  const { mutateAsync: post } = useApiPost('/v1/auth/signup');
   const validateBody = (body: SignupFormValues) => {
     if (!body.name) {
       toast.error(t('form.nameRequired'));
@@ -66,12 +67,20 @@ export default function Signup() {
       return;
     }
 
+    setIsPending(true);
+
     post(body)
       .then(() => {
         toast.success(t('userRegisteredSuccessfully'));
+
+        setTimeout(() => {
+          window.location.href = '/auth/signin';
+        }, 1500);
       })
       .catch((error) => {
         toast.error(error.message || t('serverError'));
+
+        setIsPending(false);
       });
   };
 
@@ -95,7 +104,7 @@ export default function Signup() {
             </div>
 
             <div className='flex flex-col items-center justify-center space-y-4'>
-              <Button type='submit' className='' disabled={isPending}>
+              <Button type='submit' disabled={isPending}>
                 {t('signUp')}
               </Button>
 
