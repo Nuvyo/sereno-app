@@ -20,6 +20,16 @@ class ApiService {
     this.baseURL = baseURL;
   }
 
+  private validateContentType(response: Response): void {
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error(
+        `Invalid Content-Type: expected 'application/json', received '${contentType || 'none'}'. Potential XSS/injection attack detected.`,
+      );
+    }
+  }
+
   private buildBodyAndHeaders(options: RequestInit): { body?: BodyInit | null; headers?: HeadersInit } {
     const rawBody = options.body as any;
 
@@ -75,22 +85,19 @@ class ApiService {
       credentials: 'include', // Incluir cookies nas requisições
     };
 
-    try {
-      const response = await fetch(url, config);
+    const response = await fetch(url, config);
 
-      if (!response.ok) {
-        const errorData: ApiError = await response.json();
+    this.validateContentType(response);
 
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-      }
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
 
-      const data: T = await response.json();
-
-      return data;
-    } catch (error) {
-      console.error('API Request failed:', error);
-      throw error;
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
+
+    const data: T = await response.json();
+
+    return data;
   }
 
   // GET request
