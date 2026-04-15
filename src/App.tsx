@@ -5,6 +5,8 @@ import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { SessionProvider } from '@/contexts/SessionContext';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
 import ServerStatus from '@/pages/ServerStatus';
@@ -18,22 +20,31 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme='system'>
       <I18nProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<div className='p-4 text-sm text-muted-foreground'>Carregando…</div>}>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/server-status' element={<ServerStatus />} />
-                <Route path='/auth/signup' element={<Signup />} />
-                <Route path='/auth/signin' element={<Signin />} />
-                <Route path='/auth/account' element={<Account />} />
-                <Route path='*' element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
+        <SessionProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Suspense fallback={<div className='p-4 text-sm text-muted-foreground'>Carregando…</div>}>
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/server-status' element={<ServerStatus />} />
+                  <Route path='/auth/signup' element={<Signup />} />
+                  <Route path='/auth/signin' element={<Signin />} />
+                  <Route
+                    path='/auth/account'
+                    element={
+                      <ProtectedRoute>
+                        <Account />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </TooltipProvider>
+        </SessionProvider>
       </I18nProvider>
     </ThemeProvider>
   </QueryClientProvider>
