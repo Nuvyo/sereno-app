@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { ButtonLink } from '@/components/ui/button-link';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 class SignupFormValues {
   name: string;
@@ -25,6 +26,7 @@ class SignupFormValues {
 
 export default function Signup() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
   const form = useForm<SignupFormValues>({
     defaultValues: new SignupFormValues(),
@@ -41,15 +43,17 @@ export default function Signup() {
       return false;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
     if (!emailRegex.test(body.email)) {
       toast.error(t('form.invalidEmail'));
       return false;
     }
 
-    if (body.password.length < 8) {
-      toast.error(t('form.passwordTooShort'));
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+
+    if (!passwordRegex.test(body.password)) {
+      toast.error(t('form.passwordInvalid'));
       return false;
     }
 
@@ -74,7 +78,7 @@ export default function Signup() {
         toast.success(t('userRegisteredSuccessfully'));
 
         setTimeout(() => {
-          window.location.href = '/auth/signin';
+          navigate('/auth/signin');
         }, 1500);
       })
       .catch((error) => {

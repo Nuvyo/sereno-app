@@ -21,6 +21,8 @@ export const EN_TRANSLATIONS = {
     invalidEmail: 'Invalid email',
     passwordRequired: 'Password is required',
     passwordTooShort: 'Password must be at least 8 characters long',
+    passwordInvalid:
+      'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character (!@#$%^&*)',
     passwordsDoNotMatch: 'Passwords do not match',
   },
 };

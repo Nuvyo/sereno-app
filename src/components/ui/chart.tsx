@@ -58,6 +58,10 @@ const ChartContainer = React.forwardRef<
 
 ChartContainer.displayName = 'Chart';
 
+const SAFE_COLOR_RE =
+  /^(#[0-9a-fA-F]{3,8}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)|rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d.]+\s*\)|hsl\(\s*\d+\s*,\s*[\d.]+%\s*,\s*[\d.]+%\s*\)|hsla\(\s*\d+\s*,\s*[\d.]+%\s*,\s*[\d.]+%\s*,\s*[\d.]+\s*\))$/;
+const SAFE_KEY_RE = /^[a-zA-Z0-9_-]+$/;
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
 
@@ -76,7 +80,9 @@ ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
 
-    return color ? `  --color-${key}: ${color};` : null;
+    if (!color || !SAFE_COLOR_RE.test(color) || !SAFE_KEY_RE.test(key)) return null;
+
+    return `  --color-${key}: ${color};`;
   })
   .join('\n')}
 }

@@ -42,12 +42,14 @@ export function LanguageToggle() {
     { code: 'en', label: 'English' },
   ];
 
+  const VALID_LANGUAGES = ['ptbr', 'en'];
+
   const handleLanguageChange = (langCode: string) => {
+    if (!VALID_LANGUAGES.includes(langCode)) return;
+
     if (i18n && typeof i18n.changeLanguage === 'function') {
       i18n.changeLanguage(langCode);
       localStorage.setItem('language', langCode);
-    } else {
-      console.error('i18n.changeLanguage is not available');
     }
   };
 

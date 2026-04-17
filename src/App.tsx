@@ -9,7 +9,6 @@ import { SessionProvider } from '@/contexts/SessionContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
-import ServerStatus from '@/pages/ServerStatus';
 import Signup from '@/pages/auth/Signup';
 import Signin from '@/pages/auth/Signin';
 import { I18nProvider } from '@/providers/I18nProvider';
@@ -28,7 +27,6 @@ const App = () => (
               <Suspense fallback={<div className='p-4 text-sm text-muted-foreground'>Carregando…</div>}>
                 <Routes>
                   <Route path='/' element={<Home />} />
-                  <Route path='/server-status' element={<ServerStatus />} />
                   <Route path='/auth/signup' element={<Signup />} />
                   <Route path='/auth/signin' element={<Signin />} />
                   <Route

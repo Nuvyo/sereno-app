@@ -21,6 +21,8 @@ export const PTBR_TRANLATIONS = {
     invalidEmail: 'Email inválido',
     passwordRequired: 'A senha deve ser informada',
     passwordTooShort: 'A senha deve ter pelo menos 8 caracteres',
+    passwordInvalid:
+      'A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial (!@#$%^&*)',
     passwordsDoNotMatch: 'As senhas não coincidem',
   },
 };

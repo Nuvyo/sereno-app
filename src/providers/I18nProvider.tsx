@@ -9,11 +9,15 @@ interface I18nProviderProps {
 }
 
 export function I18nProvider({ children }: I18nProviderProps) {
+  const VALID_LANGUAGES = ['ptbr', 'en'];
+
   useEffect(() => {
     if (!i18n.isInitialized) {
-      i18n.init();
+      const stored = localStorage.getItem('language');
+      const language = stored && VALID_LANGUAGES.includes(stored) ? stored : 'ptbr';
 
-      localStorage.setItem('language', i18n.language);
+      i18n.init({ lng: language });
+      localStorage.setItem('language', language);
     }
   }, []);
 
