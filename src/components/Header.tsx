@@ -7,6 +7,13 @@ import { Button } from './ui/button';
 import { useTranslation } from 'react-i18next';
 import { useApiPost } from '../hooks/use-api';
 import { ISession } from '../interfaces/session';
+import { UserCircle } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -43,9 +50,17 @@ export default function Header() {
       <div className='flex gap-2'>
         <ThemeToggle />
         <LanguageToggle />
-        <Button onClick={() => signout()}>
-          <span>{t('signOut')}</span>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant='ghost' size='icon'>
+              <UserCircle className='h-5 w-5' />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            <DropdownMenuItem onClick={() => navigate('/auth/account')}>{t('myAccount')}</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signout()}>{t('signOut')}</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

@@ -59,9 +59,9 @@ export default function Signin() {
 
     post(body)
       .then(async () => {
-        // Valida a sessão após o login bem-sucedido
         await checkSession();
-        navigate('/auth/account');
+
+        navigate('/');
       })
       .catch((error) => {
         toast.error(error.message || t('serverError'));

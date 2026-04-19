@@ -5,8 +5,6 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
 import stylistic from '@stylistic/eslint-plugin';
 import tseslint from 'typescript-eslint';
-import prettierPlugin from 'eslint-plugin-prettier';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   { ignores: ['dist/**'] },
@@ -24,7 +22,6 @@ export default tseslint.config(
       '@stylistic': stylistic,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      prettier: prettierPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -64,19 +61,6 @@ export default tseslint.config(
       'padded-blocks': 'off',
       'padding-line-between-statements': 'off',
       '@stylistic/indent': 'off',
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          jsxSingleQuote: true,
-          trailingComma: 'all',
-          printWidth: 120,
-          semi: true,
-          tabWidth: 2,
-          useTabs: false,
-        },
-      ],
-      ...eslintConfigPrettier.rules,
     },
   },
   {

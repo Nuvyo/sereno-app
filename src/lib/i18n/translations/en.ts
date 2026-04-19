@@ -1,10 +1,10 @@
 export const EN_TRANSLATIONS = {
-  home: 'Home',
   toggleTheme: 'Toggle theme',
   toggleLanguage: 'Toggle language',
   signUp: 'Sign Up',
   signIn: 'Sign In',
   signOut: 'Sign Out',
+  myAccount: 'My Account',
   redirectToSignIn: 'Already have an account? Sign in here.',
   redirectToSignUp: "Don't have an account yet? Sign up here.",
   userRegisteredSuccessfully: 'User registered successfully!',
@@ -58,7 +58,6 @@ export const EN_TRANSLATIONS = {
     emailRequired: 'Email is required',
     invalidEmail: 'Invalid email',
     passwordRequired: 'Password is required',
-    passwordTooShort: 'Password must be at least 8 characters long',
     passwordInvalid:
       'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character (!@#$%^&*)',
     passwordsDoNotMatch: 'Passwords do not match',
