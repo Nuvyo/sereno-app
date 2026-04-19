@@ -1,4 +1,5 @@
 export const PTBR_TRANSLATIONS = {
+  or: 'Ou',
   toggleTheme: 'Alternar tema',
   toggleLanguage: 'Alternar idioma',
   signUp: 'Cadastrar-se',
@@ -20,9 +21,11 @@ export const PTBR_TRANSLATIONS = {
     success: 'Email verificado!',
     successDescription: 'Seu email foi confirmado. Você já pode fazer login.',
     error: 'Falha na verificação',
-    errorDescription: 'O link é inválido ou já foi utilizado. Faça um novo cadastro ou solicite um novo link.',
+    errorDescription: 'O link é inválido ou já foi utilizado. Solicite um novo link abaixo.',
     goToSignin: 'Ir para o Login',
-    goToSignup: 'Ir para o Cadastro',
+    resendLink: 'Solicitar novo link',
+    resendEmailPlaceholder: 'Seu email',
+    resendSuccess: 'Se este email estiver cadastrado e não verificado, um novo link foi enviado. Verifique sua caixa de entrada.',
   },
   account: {
     title: 'Minha conta',

@@ -1,4 +1,5 @@
 export const EN_TRANSLATIONS = {
+  or: 'Or',
   toggleTheme: 'Toggle theme',
   toggleLanguage: 'Toggle language',
   signUp: 'Sign Up',
@@ -20,9 +21,11 @@ export const EN_TRANSLATIONS = {
     success: 'Email verified!',
     successDescription: 'Your email has been confirmed. You can now sign in.',
     error: 'Verification failed',
-    errorDescription: 'The link is invalid or has already been used. Please sign up again or request a new link.',
+    errorDescription: 'The link is invalid or has already been used. Request a new link below.',
     goToSignin: 'Go to Sign In',
-    goToSignup: 'Go to Sign Up',
+    resendLink: 'Request new link',
+    resendEmailPlaceholder: 'Your email',
+    resendSuccess: 'If this email is registered and unverified, a new link has been sent. Check your inbox.',
   },
   account: {
     title: 'My account',
