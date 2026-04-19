@@ -8,7 +8,7 @@ export const EN_TRANSLATIONS = {
   myAccount: 'My Account',
   redirectToSignIn: 'Already have an account? Sign in here.',
   redirectToSignUp: "Don't have an account yet? Sign up here.",
-  userRegisteredSuccessfully: 'User registered successfully!',
+  userRegisteredSuccessfully: 'Account created! Check your inbox to verify your email.',
   serverError: 'Server error! Please try again later or contact support.',
   field: {
     name: 'Name',

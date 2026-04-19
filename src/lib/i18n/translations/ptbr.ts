@@ -8,7 +8,7 @@ export const PTBR_TRANSLATIONS = {
   myAccount: 'Minha Conta',
   redirectToSignIn: 'Já possui uma conta? Entre aqui.',
   redirectToSignUp: 'Ainda não possui uma conta? Cadastre-se aqui.',
-  userRegisteredSuccessfully: 'Usuário cadastrado com sucesso!',
+  userRegisteredSuccessfully: 'Conta criada! Verifique seu email para confirmar o cadastro.',
   serverError: 'Erro no servidor! Tente novamente mais tarde ou contate o suporte.',
   field: {
     name: 'Nome',
