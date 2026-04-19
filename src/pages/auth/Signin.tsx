@@ -10,6 +10,7 @@ import { ButtonLink } from '@/components/ui/button-link';
 import { useNavigate } from 'react-router-dom';
 import { ISession } from '@/interfaces/session';
 import { useSession } from '@/hooks/use-session';
+import { useEffect } from 'react';
 
 class SigninFormValues {
   email: string;
@@ -24,7 +25,7 @@ class SigninFormValues {
 export default function Signin() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { checkSession } = useSession();
+  const { checkSession, hasSession, isLoading: isSessionLoading } = useSession();
   const form = useForm<SigninFormValues>({
     defaultValues: new SigninFormValues(),
   });
@@ -66,6 +67,12 @@ export default function Signin() {
         toast.error(error.message || t('serverError'));
       });
   };
+
+  useEffect(() => {
+    if (!isSessionLoading && hasSession) {
+      navigate('/');
+    }
+  }, [hasSession, isSessionLoading, navigate]);
 
   return (
     <Layout>

@@ -39,3 +39,20 @@ export function useApiDelete<TData>(endpoint: string, options?: UseMutationOptio
     ...options,
   });
 }
+
+export function useApiPatch<TData, TVariables extends Record<string, any> | any[] = Record<string, any>>(
+  endpoint: string,
+  options?: UseMutationOptions<TData, Error, TVariables>,
+) {
+  return useMutation({
+    mutationFn: (variables: TVariables) => apiService.patch<TData>(endpoint, variables),
+    ...options,
+  });
+}
+
+export function useApiDeletePlain<TData>(endpoint: string, options?: UseMutationOptions<TData, Error, void>) {
+  return useMutation({
+    mutationFn: () => apiService.delete<TData>(endpoint),
+    ...options,
+  });
+}

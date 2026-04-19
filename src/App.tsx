@@ -13,6 +13,8 @@ import Signup from '@/pages/auth/Signup';
 import Signin from '@/pages/auth/Signin';
 import { I18nProvider } from '@/providers/I18nProvider';
 import Account from '@/pages/auth/Account';
+import VerifyEmail from '@/pages/auth/VerifyEmail';
+import CancelAccountConfirm from '@/pages/auth/CancelAccountConfirm';
 
 const queryClient = new QueryClient();
 const App = () => (
@@ -37,6 +39,8 @@ const App = () => (
                       </ProtectedRoute>
                     }
                   />
+                  <Route path='/verify-email' element={<VerifyEmail />} />
+                  <Route path='/cancel-account/confirm' element={<CancelAccountConfirm />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>
               </Suspense>
